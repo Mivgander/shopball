@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.submenu-element
+{
+    @apply w-full;
+    @apply text-black;
+    @apply cursor-pointer;
+    @apply bg-blue-600;
+    @apply hover:bg-blue-500;
+    @apply pl-2;
+    height: 50px;
+}
+
+.menu-a
+{
+    @apply h-full;
+    @apply cursor-pointer;
+    @apply flex;
+    @apply items-center;
+    @apply justify-start;
+}
+
+.submenu
+{
+    @apply z-10;
+}
