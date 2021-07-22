@@ -24,3 +24,4 @@ Podstrona "produkt":
 - slider w menu głównym ma być klikany z różnymi funkcjami
 - dodanie obsługi kont
 - dodanie obsługi koszyka
+- możliwość dodawania produktów
