@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PilkaNozna;
 use App\Models\PilkaReczna;
 use App\Models\Koszykowka;
+use App\Models\Polecane;
 use App\Models\Siatkowka;
 use App\Models\TenisStolowy;
 use App\Models\TenisZiemny;
@@ -98,145 +99,81 @@ class ProduktController extends Controller
             return $param;
         }
 
+        /**
+         * Zwraca tablicę pięciu obiektów klasy PolecaneDane
+         *
+         * @param string $kategoriaURL nazwa kategorii z URL strony. W ProduktController jest to zmienna $nazwa
+         * @param string $id id głównego produktu. Jest potrzebny, żeby się nie wyświetlał w polecanych.
+         * W ProduktController jest to ziemnna $id
+         *
+         * @return array
+         */
+        function ProduktPolecane($kategoriaURL, $id)
+        {
+            $select = [];
+            $elosiema = null;
+
+            switch($kategoriaURL)
+            {
+                case 'pilka-nozna':
+                    $elosiema = PilkaNozna::where('id', '!=', $id)->inRandomOrder()->limit(5)->get();
+                    break;
+                case 'pilka-reczna':
+                    $elosiema = PilkaReczna::where('id', '!=', $id)->inRandomOrder()->limit(5)->get();
+                    break;
+                case 'siatkowka':
+                    $elosiema = Siatkowka::where('id', '!=', $id)->inRandomOrder()->limit(5)->get();
+                    break;
+                case 'koszykowka':
+                    $elosiema = Koszykowka::where('id', '!=', $id)->inRandomOrder()->limit(5)->get();
+                    break;
+                case 'tenis-ziemny':
+                    $elosiema = TenisZiemny::where('id', '!=', $id)->inRandomOrder()->limit(5)->get();
+                    break;
+                case 'tenis-stolowy':
+                    $elosiema = TenisStolowy::where('id', '!=', $id)->inRandomOrder()->limit(5)->get();
+                    break;
+            }
+
+            foreach($elosiema as $row)
+            {
+                $select[] = new PolecaneDane($kategoriaURL, $row);
+            }
+
+            return $select;
+        }
+
         switch($nazwa)
         {
             case 'pilka-nozna':
                 $produkt = PilkaNozna::where('id', $id)->get();
                 $parametry = ProduktCreateParametry('pilka_nozna', $id);
-
-                $max = PilkaNozna::max('id');
-                $podobne = [];
-                $posiadane = [];
-                $found = 0;
-                while($found != 5)
-                {
-                    $rand = rand(1, $max);
-                    if($rand != $id && !in_array($rand, $posiadane))
-                    {
-                        $select = PilkaNozna::where('id', $rand)->get();
-                        if($select)
-                        {
-                            $podobne[] = new PolecaneDane('pilka-nozna', $select);
-                            $posiadane[] = $rand;
-                            $found++;
-                        }
-                    }
-                }
+                $podobne = ProduktPolecane($nazwa, $id);
                 break;
             case 'pilka-reczna':
                 $produkt = PilkaReczna::where('id', $id)->get();
                 $parametry = ProduktCreateParametry('pilka_reczna', $id);
-
-                $max = PilkaReczna::max('id');
-                $podobne = [];
-                $posiadane = [];
-                $found = 0;
-                while($found != 5)
-                {
-                    $rand = rand(1, $max);
-                    if($rand != $id && !in_array($rand, $posiadane))
-                    {
-                        $select = PilkaReczna::where('id', $rand)->get();
-                        if($select)
-                        {
-                            $podobne[] = new PolecaneDane('pilka-reczna', $select);
-                            $posiadane[] = $rand;
-                            $found++;
-                        }
-                    }
-                }
+                $podobne = ProduktPolecane($nazwa, $id);
                 break;
             case 'siatkowka':
                 $produkt = Siatkowka::where('id', $id)->get();
                 $parametry = ProduktCreateParametry('siatkowka', $id);
-
-                $max = Siatkowka::max('id');
-                $podobne = [];
-                $posiadane = [];
-                $found = 0;
-                while($found != 5)
-                {
-                    $rand = rand(1, $max);
-                    if($rand != $id && !in_array($rand, $posiadane))
-                    {
-                        $select = Siatkowka::where('id', $rand)->get();
-                        if($select)
-                        {
-                            $podobne[] = new PolecaneDane('siatkowka', $select);
-                            $posiadane[] = $rand;
-                            $found++;
-                        }
-                    }
-                }
+                $podobne = ProduktPolecane($nazwa, $id);
                 break;
             case 'koszykowka':
                 $produkt = Koszykowka::where('id', $id)->get();
                 $parametry = ProduktCreateParametry('koszykowka', $id);
-
-                $max = Koszykowka::max('id');
-                $podobne = [];
-                $posiadane = [];
-                $found = 0;
-                while($found != 5)
-                {
-                    $rand = rand(1, $max);
-                    if($rand != $id && !in_array($rand, $posiadane))
-                    {
-                        $select = Koszykowka::where('id', $rand)->get();
-                        if($select)
-                        {
-                            $podobne[] = new PolecaneDane('koszykowka', $select);
-                            $posiadane[] = $rand;
-                            $found++;
-                        }
-                    }
-                }
+                $podobne = ProduktPolecane($nazwa, $id);
                 break;
             case 'tenis-stolowy':
                 $produkt = TenisStolowy::where('id', $id)->get();
                 $parametry = ProduktCreateParametry('tenis_stolowy', $id);
-
-                $max = TenisStolowy::max('id');
-                $podobne = [];
-                $posiadane = [];
-                $found = 0;
-                while($found != 5)
-                {
-                    $rand = rand(1, $max);
-                    if($rand != $id && !in_array($rand, $posiadane))
-                    {
-                        $select = TenisStolowy::where('id', $rand)->get();
-                        if($select)
-                        {
-                            $podobne[] = new PolecaneDane('tenis-stolowy', $select);
-                            $posiadane[] = $rand;
-                            $found++;
-                        }
-                    }
-                }
+                $podobne = ProduktPolecane($nazwa, $id);
                 break;
             case 'tenis-ziemny':
                 $produkt = TenisZiemny::where('id', $id)->get();
                 $parametry = ProduktCreateParametry('tenis_ziemny', $id);
-
-                $max = TenisZiemny::max('id');
-                $podobne = [];
-                $posiadane = [];
-                $found = 0;
-                while($found != 5)
-                {
-                    $rand = rand(1, $max);
-                    if($rand != $id && !in_array($rand, $posiadane))
-                    {
-                        $select = TenisZiemny::where('id', $rand)->get();
-                        if($select)
-                        {
-                            $podobne[] = new PolecaneDane('tenis-ziemny', $select);
-                            $posiadane[] = $rand;
-                            $found++;
-                        }
-                    }
-                }
+                $podobne = ProduktPolecane($nazwa, $id);
                 break;
         }
 
@@ -245,7 +182,8 @@ class ProduktController extends Controller
         return view('produkt', [
             'produkt'=>$produkt,
             'parametry'=>$parametry,
-            'podobne'=>$podobne
+            'podobne'=>$podobne,
+            'nazwa'=>$nazwa
         ]);
     }
 }

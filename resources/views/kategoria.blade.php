@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHOPBALL - {{$tytul}}</title>
+    <title>{{$tytul}} - SHOPBALL</title>
 
     <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet">
 
@@ -114,7 +114,7 @@
 
     <main class="w-full bg-gray-200 my-4">
         <div class="main-parent w-full mx-auto bg-gray-200 my-10">
-            <h1 class="text-5xl uppercase">{{$tytul}}</h1>
+            <h1 class="text-5xl uppercase">{{$tytul}} <span class="text-4xl">({{$produkty->total()}})</span></h1>
         </div>
 
         <div class="main-parent w-full mx-auto flex flex-row items-start">
@@ -179,7 +179,13 @@
                                 @endforeach
                             </p>
                             <h1 class="text-3xl font-bold">{{number_format($produkt->cena, 2, ',', ' ')}} zł</h1>
-                            <button data-id="{{$produkt->id}}" class="koszyk mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-lg">Dodaj do koszyka</button>
+                            @if(isset(Auth::user()->email))
+                                <div>
+                                    <button data-id="{{$produkt->id}}" data-kategoria="{{$nazwa}}" class="koszyk mt-5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-lg">Dodaj do koszyka</button>
+                                </div>
+                            @else
+                                <p class="mt-5 text-red-700 text-lg">Zaloguj się aby dodać do koszyka</p>
+                            @endif
                         </div>
                     </div>
                     <?php $a++; ?>
@@ -198,7 +204,7 @@
         for(let i=0; i<btns.length; i++)
         {
             btns[i].addEventListener('click', event => {
-                alert("Hello " + btns[i].dataset.id);
+                window.location = '/koszyk/dodaj/' + btns[i].dataset.kategoria + '/' + btns[i].dataset.id;
             });
         }
     </script>

@@ -50,7 +50,11 @@
             <div class="w-1/2 p-6 ml-6" style="display: flex; flex-direction: column; justify-content: center; align-items: baseline;">
                 <h1 class="text-xl font-bold">{{$produkt->tytul}}</h1>
                 <h2 class="text-lg font-bold">{{number_format($produkt->cena, 2, ',', ' ')}} zł</h2>
-                <button data-id="{{$produkt->id}}" class="koszyk mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-lg uppercase">Dodaj do koszyka</button>
+                @if(isset(Auth::user()->email))
+                    <button data-id="{{$produkt->id}}" data-kategoria="{{$nazwa}}" id="koszyk" class="mt-5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-lg">Dodaj do koszyka</button>
+                @else
+                    <p class="mt-5 text-red-700 text-lg">Zaloguj się aby dodać do koszyka</p>
+                @endif
             </div>
         </div>
 
@@ -83,18 +87,26 @@
             </div>
             <div class="bg-white w-full flex flex-row">
                 @foreach($podobne as $row)
-                <a href="{{ asset('produkt/'.$row->kategoriaURL.'/'.$row->query[0]->id) }}" class=" w-1/5 polecane cursor-pointer p-4">
+                <a href="{{ asset('produkt/'.$row->kategoriaURL.'/'.$row->query->id) }}" class=" w-1/5 polecane cursor-pointer p-4">
                     <div>
-                        <img src="{{ asset('images/'.$row->query[0]->zdjecie) }}" style="height: 200px; margin: 0 auto;">
+                        <img src="{{ asset('images/'.$row->query->zdjecie) }}" style="height: 200px; margin: 0 auto;">
                     </div>
                     <div>
-                        <h2 class="cena text-left text-lg font-bold">{{number_format($row->query[0]->cena, 2, ',', ' ')}} zł</h2>
-                        <h2 class="produkt text-left text-lg">{{$row->query[0]->tytul}}</h2>
+                        <h2 class="cena text-left text-lg font-bold">{{number_format($row->query->cena, 2, ',', ' ')}} zł</h2>
+                        <h2 class="produkt text-left text-lg">{{$row->query->tytul}}</h2>
                     </div>
                 </a>
                 @endforeach
             </div>
         </div>
     </main>
+
+    <script>
+        const btn = document.getElementById("koszyk");
+
+        btn.addEventListener('click', event => {
+            window.location = '/koszyk/dodaj/' + btn.dataset.kategoria + '/' + btn.dataset.id;
+        });
+    </script>
 </body>
 </html>

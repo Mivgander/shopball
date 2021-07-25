@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UploadController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\KategoriaController;
 use App\Http\Controllers\ProduktController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Http\RedirectResponse;
 
 /*
@@ -19,9 +20,19 @@ use Illuminate\Http\RedirectResponse;
 */
 
 Route::get('/', [IndexController::class, 'show']);
-
 Route::get('kategoria/{nazwa}', [KategoriaController::class, 'show'])->name('kategorie');
 Route::get('produkt/{nazwa}/{id}', [ProduktController::class, 'show']);
 
-Route::view('upload', 'upload');
-Route::post('upload', [UploadController::class, 'index']);
+/* LOGOWANIE */
+Route::get('login', [LoginController::class, 'main']);
+Route::post('login', [LoginController::class, 'login']);
+/* LOGOWANIE */
+
+/* WYLOGOWYWANIE */
+Route::get('wyloguj', [LoginController::class, 'wyloguj']);
+/* WYLOGOWYWANIE */
+
+/* REJESTRACJA */
+Route::get('register', [RegisterController::class, 'main']);
+Route::post('register', [RegisterController::class, 'register']);
+/* REJESTRACJA */
