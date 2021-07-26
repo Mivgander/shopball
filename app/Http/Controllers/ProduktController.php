@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\PilkaNozna;
 use App\Models\PilkaReczna;
 use App\Models\Koszykowka;
-use App\Models\Polecane;
 use App\Models\Siatkowka;
 use App\Models\TenisStolowy;
 use App\Models\TenisZiemny;
@@ -24,7 +23,6 @@ class ProduktController extends Controller
 {
     function show($nazwa, $id)
     {
-
         $produkt = null;
         $parametry = [];
         $podobne = [];
@@ -38,13 +36,13 @@ class ProduktController extends Controller
          */
         function ProduktCreateParametry($databaseName, $id)
         {
-            $columny = DB::table('INFORMATION_SCHEMA.COLUMNS')->select('COLUMN_NAME as kolumna')->where('TABLE_SCHEMA', 'shopball')->where('TABLE_NAME', $databaseName)->get();
+            $columny = DB::select(DB::raw('SHOW COLUMNS FROM '.$databaseName));
             $i = 1;
             $nazwy = [];
             $param = [];
-            while($columny[$i]->kolumna != 'cena')
+            while($columny[$i]->Field != 'cena')
             {
-                $nazwy[] = $columny[$i]->kolumna;
+                $nazwy[] = $columny[$i]->Field;
                 $i++;
             }
 
@@ -55,42 +53,42 @@ class ProduktController extends Controller
                 case 'pilka_nozna':
                     foreach(PilkaNozna::select($nazwy)->where('id', $id)->get()[0]->toArray() as $value)
                     {
-                        $param[] = [$columny[$i]->kolumna, $value];
+                        $param[] = [$columny[$i]->Field, $value];
                         $i++;
                     }
                     break;
                 case 'pilka_reczna':
                     foreach(PilkaReczna::select($nazwy)->where('id', $id)->get()[0]->toArray() as $value)
                     {
-                        $param[] = [$columny[$i]->kolumna, $value];
+                        $param[] = [$columny[$i]->Field, $value];
                         $i++;
                     }
                     break;
                 case 'siatkowka':
                     foreach(Siatkowka::select($nazwy)->where('id', $id)->get()[0]->toArray() as $value)
                     {
-                        $param[] = [$columny[$i]->kolumna, $value];
+                        $param[] = [$columny[$i]->Field, $value];
                         $i++;
                     }
                     break;
                 case 'koszykowka':
                     foreach(Koszykowka::select($nazwy)->where('id', $id)->get()[0]->toArray() as $value)
                     {
-                        $param[] = [$columny[$i]->kolumna, $value];
+                        $param[] = [$columny[$i]->Field, $value];
                         $i++;
                     }
                     break;
                 case 'tenis_ziemny':
                     foreach(TenisZiemny::select($nazwy)->where('id', $id)->get()[0]->toArray() as $value)
                     {
-                        $param[] = [$columny[$i]->kolumna, $value];
+                        $param[] = [$columny[$i]->Field, $value];
                         $i++;
                     }
                     break;
                 case 'tenis_stolowy':
                     foreach(TenisStolowy::select($nazwy)->where('id', $id)->get()[0]->toArray() as $value)
                     {
-                        $param[] = [$columny[$i]->kolumna, $value];
+                        $param[] = [$columny[$i]->Field, $value];
                         $i++;
                     }
                     break;
