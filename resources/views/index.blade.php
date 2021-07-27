@@ -66,11 +66,11 @@
 
                 <br><hr class="border-t-2 border-gray-200"><br>
 
-                <a href="#" class="cursor-pointer">
-                    <img src="{{ asset('img/produkty/tenis-ziemny.jpg') }}" alt="piłka tenis ziemny" style="max-height: 300px; width: auto; margin: 5px auto;">
+                <a href="{{ url('/produkt/'.$produktDnia->kategoriaURL.'/'.$produktDnia->query->id) }}" class="cursor-pointer">
+                    <img src="{{ asset('images/'.$produktDnia->query->zdjecie) }}" alt="piłka tenis ziemny" style="max-height: 300px; width: auto; margin: 5px auto;">
                     <div>
-                        <h2 class="text-left text-xl font-bold">22 zł</h2>
-                        <h2 class="text-left text-xl">Piłki do tenisa ziemnego Head Team 4 szt.</h2>
+                        <h2 class="text-left text-xl font-bold">{{number_format($produktDnia->query->cena, 2, ',', ' ')}} zł</h2>
+                        <h2 class="text-left text-xl">{{$produktDnia->query->tytul}}</h2>
                     </div>
                 </a>
             </div>
@@ -96,6 +96,11 @@
 
             </div>
         </section>
+
+        @if(Session::has('registered'))
+            {{Session::forget('registered')}}
+            @include('registerConfirm')
+        @endif
     </main>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

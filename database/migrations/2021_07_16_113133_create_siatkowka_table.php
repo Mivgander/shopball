@@ -13,23 +13,26 @@ class CreateSiatkowkaTable extends Migration
      */
     public function up()
     {
-        Schema::create('siatkowka', function (Blueprint $table) {
-            $table->id();
-            $table->string("marka");
-            $table->enum("rozmiar", ['2', '4', '5']);
-            $table->enum('łączenie', ['klejona', 'szyta maszynowo', 'szyta ręcznie', 'zgrzewana termicznie', 'brak informacji']);
-            $table->enum('przeznaczenie', ['na halę', 'na plażę', 'na basen', 'brak informacji']);
-            $table->string("kolor");
-            $table->float('cena', 6, 2);
-            $table->string('tytul');
-            $table->text('opis');
-            $table->string('zdjecie');
-            $table->timestamps();
+        if(!Schema::hasTable('siatkowka'))
+        {
+            Schema::create('siatkowka', function (Blueprint $table) {
+                $table->id();
+                $table->string("marka");
+                $table->enum("rozmiar", ['2', '4', '5']);
+                $table->enum('łączenie', ['klejona', 'szyta maszynowo', 'szyta ręcznie', 'zgrzewana termicznie', 'brak informacji']);
+                $table->enum('przeznaczenie', ['na halę', 'na plażę', 'na basen', 'brak informacji']);
+                $table->string("kolor");
+                $table->float('cena', 6, 2);
+                $table->string('tytul');
+                $table->text('opis');
+                $table->string('zdjecie');
+                $table->timestamps();
 
-            $table->engine = "InnoDB";
-            $table->charset = "utf8mb4";
-            $table->collation = "utf8mb4_unicode_ci";
-        });
+                $table->engine = "InnoDB";
+                $table->charset = "utf8mb4";
+                $table->collation = "utf8mb4_unicode_ci";
+            });
+        }
     }
 
     /**

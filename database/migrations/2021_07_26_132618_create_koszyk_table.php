@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTenisStolowyTable extends Migration
+class CreateKoszykTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,13 @@ class CreateTenisStolowyTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('tenis_stolowy'))
+        if(!Schema::hasTable('koszyk'))
         {
-            Schema::create('tenis_stolowy', function (Blueprint $table) {
+            Schema::create('koszyk', function (Blueprint $table) {
                 $table->id();
-                $table->string("marka");
-                $table->enum("typ", ['1 gwiazdka', '2 gwiazdki', '3 gwiazdki', 'brak informacji']);
-                $table->string("kolor");
-                $table->float('cena', 6, 2);
-                $table->string('tytul');
-                $table->text('opis');
-                $table->string('zdjecie');
+                $table->enum('tabela', ['pilka_nozna', 'pilka_reczna', 'siatkowka', 'koszykowka', 'tenis_ziemny', 'tenis_stolowy']);
+                $table->bigInteger('id_produktu');
+                $table->bigInteger('id_klienta');
                 $table->timestamps();
 
                 $table->engine = "InnoDB";
@@ -40,6 +36,6 @@ class CreateTenisStolowyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tenis_stolowy');
+        Schema::dropIfExists('koszyk');
     }
 }

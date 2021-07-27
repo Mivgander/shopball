@@ -15,16 +15,12 @@ class LoginController extends Controller
 
     function login(LoginRequest $request)
     {
-        $remember = false;
-        if($request->remember)
-        {
-            $remember = true;
-        }
-
         $userData = array(
             'email' => $request->email,
             'password' => $request->password
         );
+
+        $remember = $request->has('remember') ? true : false;
 
         if(Auth::attempt($userData, $remember))
         {

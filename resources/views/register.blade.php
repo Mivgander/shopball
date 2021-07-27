@@ -1,6 +1,3 @@
-@if(isset(Auth::user()->email))
-<script>window.location = '/'; </script>
-@endif
 <!DOCTYPE html>
 <html lang="en">
 <head>

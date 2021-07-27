@@ -50,7 +50,7 @@
             <div class="w-1/2 p-6 ml-6" style="display: flex; flex-direction: column; justify-content: center; align-items: baseline;">
                 <h1 class="text-xl font-bold">{{$produkt->tytul}}</h1>
                 <h2 class="text-lg font-bold">{{number_format($produkt->cena, 2, ',', ' ')}} zł</h2>
-                @if(isset(Auth::user()->email))
+                @if(Auth::check())
                     <button data-id="{{$produkt->id}}" data-kategoria="{{$nazwa}}" id="koszyk" class="mt-5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-lg">Dodaj do koszyka</button>
                 @else
                     <p class="mt-5 text-red-700 text-lg">Zaloguj się aby dodać do koszyka</p>
@@ -99,6 +99,11 @@
                 @endforeach
             </div>
         </div>
+
+        @if(Session::has('registered'))
+            {{Session::forget('registered')}}
+            @include('registerConfirm')
+        @endif
     </main>
 
     <script>

@@ -21,9 +21,9 @@
         </div>
 
         <div class="text-xl flex flex-row">
-            @if(isset(Auth::user()->email))
+            @if(Auth::check())
             <div class="mr-7" style="height: 70px">
-                <a href="{{ url('/koszyk') }}" class="cursor-pointer hover:underline menu-a">Koszyk</a>
+                <a href="{{ url('/koszyk') }}" class="cursor-pointer hover:underline menu-a">Koszyk&#160<span class="text-blue-600">({{App\Models\Koszyk::where('id_klienta', Auth::user()->id)->count()}})</span></a>
             </div>
             <div class="mr-7 menu-item" style="height: 70px">
                 <a href="{{ url('/konto') }}" class="cursor-pointer hover:underline menu-a">Konto</a>

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -20,10 +19,10 @@ class RegisterController extends Controller
         if(User::create([
             'name' => $request->nick,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'remember_token' => Str::random(10)
+            'password' => Hash::make($request->password)
         ]))
         {
+            session(['registered' => true]);
             return redirect($request->session()->get('prevURL'));
         }
         else

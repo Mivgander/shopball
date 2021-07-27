@@ -164,7 +164,7 @@
                 <?php $a = 0; ?>
                 @foreach($produkty as $produkt)
                     <div class="mx-3 p-3 bg-white flex flex-row flex-wrap border-b-2 border-gray-200">
-                        <a href="#elosiema" class="mr-5 cursor-pointer" style="width: 150px; height: 150px;">
+                        <a href="{{ asset('/produkt/'.$nazwa.'/'.$produkt->id) }}" class="mr-5 cursor-pointer" style="width: 150px; height: 150px;">
                             <img src="{{ asset('images/'.$produkt->zdjecie) }}" style="max-height: 150px; max-width: 150px" class="mx-auto">
                         </a>
                         <div style="width: calc(100% - 180px)">
@@ -179,7 +179,7 @@
                                 @endforeach
                             </p>
                             <h1 class="text-3xl font-bold">{{number_format($produkt->cena, 2, ',', ' ')}} zł</h1>
-                            @if(isset(Auth::user()->email))
+                            @if(Auth::check())
                                 <div>
                                     <button data-id="{{$produkt->id}}" data-kategoria="{{$nazwa}}" class="koszyk mt-5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-lg">Dodaj do koszyka</button>
                                 </div>
@@ -196,6 +196,11 @@
                 </div>
             </div>
         </div>
+
+        @if(Session::has('registered'))
+            {{Session::forget('registered')}}
+            @include('registerConfirm')
+        @endif
     </main>
 
     <script>

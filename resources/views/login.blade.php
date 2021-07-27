@@ -1,4 +1,4 @@
-@if(isset(Auth::user()->email))
+@if(Auth::check())
 <script>window.location = '/'; </script>
 @endif
 <!DOCTYPE html>
@@ -169,6 +169,11 @@
                 </div>
             </form>
         </div>
+
+        @if(Session::has('registered'))
+            {{Session::forget('registered')}}
+            @include('registerConfirm')
+        @endif
     </main>
 </body>
 </html>

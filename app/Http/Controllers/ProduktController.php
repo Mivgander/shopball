@@ -10,15 +10,6 @@ use App\Models\TenisStolowy;
 use App\Models\TenisZiemny;
 use Illuminate\Support\Facades\DB;
 
-class PolecaneDane
-{
-    function __construct($kategoriaURL, $query)
-    {
-        $this->kategoriaURL = $kategoriaURL;
-        $this->query = $query;
-    }
-}
-
 class ProduktController extends Controller
 {
     function show($nazwa, $id)

@@ -13,15 +13,18 @@ class CreatePolecaneTable extends Migration
      */
     public function up()
     {
-        Schema::create('polecane', function (Blueprint $table) {
-            $table->id();
-            $table->enum('tabela', ['pilka_nozna', 'pilka_reczna', 'koszykowka', 'siatkowka', 'tenis_ziemny', 'tenis_stolowy']);
-            $table->bigInteger('id_produktu', false, true);
+        if(!Schema::hasTable('polecane'))
+        {
+            Schema::create('polecane', function (Blueprint $table) {
+                $table->id();
+                $table->enum('tabela', ['pilka_nozna', 'pilka_reczna', 'koszykowka', 'siatkowka', 'tenis_ziemny', 'tenis_stolowy']);
+                $table->bigInteger('id_produktu', false, true);
 
-            $table->engine = "InnoDB";
-            $table->charset = "utf8mb4";
-            $table->collation = "utf8mb4_unicode_ci";
-        });
+                $table->engine = "InnoDB";
+                $table->charset = "utf8mb4";
+                $table->collation = "utf8mb4_unicode_ci";
+            });
+        }
     }
 
     /**
