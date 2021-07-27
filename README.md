@@ -7,14 +7,14 @@ Jest to mój projekt fikcyjnego sklepu internetowego sprzedającego piłki. Cał
 
 Ogólne:
 
--  Obsługa kont
--  Obsługa koszyka
+- Obsługa kont
+- Obsługa koszyka
 
 Strona główna:
 
--  całe menu działa odpowiednio
--  blok "polecane"
--  blok "produkt dnia"
+- całe menu działa odpowiednio
+- blok "polecane"
+- blok "produkt dnia"
 
 Podstrona "kategoria":
 
@@ -28,6 +28,7 @@ Podstrona "produkt":
 
 ## Do zrobienia
 - slider w menu głównym ma być klikany z różnymi funkcjami
+- pasek wyszykiwań
 - możliwość dodawania produktów
 
  [ Demo ]: <http://shopball.epizy.com>
