@@ -10,6 +10,7 @@
     <title>Logowanie - SHOPBALL</title>
 
     <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet">
+    @livewireStyles
 
     <style>
         header
@@ -175,5 +176,6 @@
             @include('registerConfirm')
         @endif
     </main>
+    @livewireScripts
 </body>
 </html>

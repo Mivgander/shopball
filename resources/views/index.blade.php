@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick/slick-theme.css') }}"/>
 
     <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet">
+    @livewireStyles
 
     <style>
         header
@@ -21,7 +22,6 @@
         #search-input
         {
             border: 1px solid gray;
-            border-right: 0px solid black;
             outline: none;
             flex-grow: 1;
         }
@@ -55,9 +55,9 @@
         <section class="w-full flex flex-row">
             <div class="w-2/3 ml-4 my-4 cool-shadow">
                 <div class="your-class">
-                    <div><img src="{{ asset('img/slider1.jpg') }}" alt="slider1" style="width: 100%; height: 500px;"></div>
-                    <div><img src="{{ asset('img/slider2.jpg') }}" alt="slider2" style="width: 100%; height: 500px;"></div>
-                    <div><img src="{{ asset('img/slider3.jpg') }}" alt="slider3" style="width: 100%; height: 500px;"></div>
+                    <div><a href="{{ url('o-nas') }}"><img src="{{ asset('img/slider1.jpg') }}" alt="slider1" style="width: 100%; height: 500px;"></a></div>
+                    <div><a href="{{ url('register') }}"><img src="{{ asset('img/slider2.jpg') }}" alt="slider2" style="width: 100%; height: 500px;"></a></div>
+                    <div><a href="{{ url('o-produktach') }}"><img src="{{ asset('img/slider3.jpg') }}" alt="slider3" style="width: 100%; height: 500px;"></a></div>
                 </div>
             </div>
 
@@ -117,5 +117,6 @@
             });
         });
     </script>
+    @livewireScripts
 </body>
 </html>

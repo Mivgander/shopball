@@ -7,6 +7,7 @@
     <title>Dodano produkt - SHOPBALL</title>
 
     <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet">
+    @livewireStyles
 
     <style>
         header
@@ -84,5 +85,6 @@
             @endif
         </div>
     </main>
+    @livewireScripts
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{$tytul}} - SHOPBALL</title>
+    <title>Szukaj - SHOPBALL</title>
 
     <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet">
     @livewireStyles
@@ -116,19 +116,21 @@
     <main class="w-full bg-gray-200 my-4">
         @if(count($produkty) > 0)
         <div class="main-parent w-full mx-auto bg-gray-200 my-10">
-            <h1 class="text-5xl uppercase">{{$tytul}} <span class="text-4xl">({{$produkty->total()}})</span></h1>
+            <h1 class="text-5xl uppercase">Wyniki wyszukania <span class="text-gray-600 normal-case">"{{$szukanyTekst}}"</span> <span class="text-4xl">({{ count($produkty) }})</span></h1>
         </div>
 
         <div class="main-parent w-full mx-auto flex flex-row items-start">
             <div class="mr-4 p-6 bg-white" style="width: 310px;">
                 <div class="block">
                     <h1 class="text-3xl">Filtry</h1><br>
-                    <a href="./{{$nazwa}}" class="text-xl px-4 py-2 font-bold bg-blue-600 hover:bg-blue-500">Wyczyść filtry</a>
+                    <a href="./szukaj?q={{$szukanyTekst}}&kategoria={{$szukanaKategoria}}" class="text-xl px-4 py-2 font-bold bg-blue-600 hover:bg-blue-500">Wyczyść filtry</a>
                 </div>
                 <div class="mt-14">
-                    <form action="{{ route('kategorie', ['nazwa'=>$nazwa]) }}" method="get">
+                    <form action="{{ url('szukaj') }}" method="get">
                         @csrf
 
+                        <input type="hidden" name='q' value="{{$szukanyTekst}}">
+                        <input type="hidden" name='kategoria' value="{{$szukanaKategoria}}">
                         <div class="mt-8">
                             <h2 class="text-2xl">Cena</h2>
                             <div class="mt-4 flex flex-row justify-center">
@@ -144,14 +146,15 @@
                             <h2 class="text-2xl">{{mb_strtoupper(mb_substr($filtr->nazwa, 0, 1)) . mb_substr($filtr->nazwa, 1);}}</h2>
                             <div class="mt-4">
                                 @foreach($filtr->query as $query)
-                                <label class="filtr-box"><span class="filtr-nazwa text-xl">{{$query->param}}</span> <span class="text-base">({{$query->ile}})</span>
-                                    <input type="checkbox" name="{{$filtr->nazwa}}[]" value="{{$query->param}}" <?php if(isset($_REQUEST[$filtr->nazwa])) echo 'checked'; ?>>
+                                <label class="filtr-box"><span class="filtr-nazwa text-xl">{{$query['param']}}</span> <span class="text-base">({{$query['ile']}})</span>
+                                    <input type="checkbox" name="{{$filtr->nazwa}}[]" value="{{$query['param']}}" <?php if(isset($_REQUEST[$filtr->nazwa]) && in_array($query['param'], $_REQUEST[$filtr->nazwa])) echo 'checked'; ?>>
                                     <span class="checkmark"></span>
                                 </label>
                                 @endforeach
                             </div>
                         </div>
                         @endforeach
+
                         <div class="mt-8 flex justify-between">
                             <button id="fBtn" type="submit" class="text-xl px-4 py-2 w-full font-bold mx-auto bg-blue-600 hover:bg-blue-500">Filtruj</button>
                         </div>
@@ -159,31 +162,26 @@
                 </div>
             </div>
             <div class="w-3/4 bg-white p-2">
-                <div class="mb-6 mt-4 mx-3">
-                    {{$produkty->links()}}
-                </div>
 
                 <?php $a = 0; ?>
                 @foreach($produkty as $produkt)
                     <div class="mx-3 p-3 bg-white flex flex-row flex-wrap border-b-2 border-gray-200">
-                        <a href="{{ asset('/produkt/'.$nazwa.'/'.$produkt->id) }}" class="mr-5 cursor-pointer" style="width: 150px; height: 150px;">
-                            <img src="{{ asset('images/'.$produkt->zdjecie) }}" style="max-height: 150px; max-width: 150px" class="mx-auto">
+                        <a href="{{ asset('/produkt/'.$produkt->kategoriaURL.'/'.$produkt->query->id) }}" class="mr-5 cursor-pointer" style="width: 150px; height: 150px;">
+                            <img src="{{ asset('images/'.$produkt->query->zdjecie) }}" style="max-height: 150px; max-width: 150px" class="mx-auto">
                         </a>
                         <div style="width: calc(100% - 180px)">
-                            <a href="{{ asset('/produkt/'.$nazwa.'/'.$produkt->id) }}" class="hover:underline cursor-pointer">
-                                <h2 class="text-xl">{{$produkt->tytul}}</h2>
+                            <a href="{{ asset('/produkt/'.$produkt->kategoriaURL.'/'.$produkt->query->id) }}" class="hover:underline cursor-pointer">
+                                <h2 class="text-xl">{{$produkt->query->tytul}}</h2>
                             </a>
                             <p class="text-sm">
-                                <?php $b = 0; ?>
-                                @foreach($filtry as $filtr)
-                                    <span class="text-gray-500">{{$filtr->nazwa}}:</span> {{$parametry[$b][$a]}}&#160&#160
-                                    <?php $b++; ?>
+                                @foreach($parametry[$a] as $param)
+                                    <span class="text-gray-500">{{$param['rodzaj']}}:</span> {{$param['wartosc']}}&#160&#160
                                 @endforeach
                             </p>
-                            <h1 class="text-3xl font-bold">{{number_format($produkt->cena, 2, ',', ' ')}} zł</h1>
+                            <h1 class="text-3xl font-bold">{{number_format($produkt->query->cena, 2, ',', ' ')}} zł</h1>
                             @if(Auth::check())
                                 <div>
-                                    <button data-id="{{$produkt->id}}" data-kategoria="{{$nazwa}}" class="koszyk mt-5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-lg">Dodaj do koszyka</button>
+                                    <button data-id="{{$produkt->query->id}}" data-kategoria="{{$produkt->kategoriaURL}}" class="koszyk mt-5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-lg">Dodaj do koszyka</button>
                                 </div>
                             @else
                                 <p class="mt-5 text-red-700 text-lg">Zaloguj się aby dodać do koszyka</p>
@@ -193,14 +191,11 @@
                     <?php $a++; ?>
                 @endforeach
 
-                <div class="mt-6 mb-4 mx-3">
-                    {{$produkty->links()}}
-                </div>
             </div>
         </div>
         @else
         <div class="w-full text-2xl font-bold text-center mt-10">
-            Przepraszamy, ale nie znaleźliśmy takich produktów
+            Przepraszamy, nie znaleźliśmy wyników dla frazy <span>"{{ $szukanyTekst }}"</span>
         </div>
         @endif
 

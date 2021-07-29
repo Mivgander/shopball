@@ -7,6 +7,7 @@
     <title>Koszyk - SHOPBALL</title>
 
     <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet">
+    @livewireStyles
 
     <style>
         header
@@ -85,5 +86,6 @@
             });
         }
     </script>
+    @livewireScripts
 </body>
 </html>

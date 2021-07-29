@@ -7,6 +7,7 @@
     <title>Rejestracja - SHOPBALL</title>
 
     <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet">
+    @livewireStyles
 
     <style>
         header
@@ -98,5 +99,6 @@
             </form>
         </div>
     </main>
+    @livewireScripts
 </body>
 </html>

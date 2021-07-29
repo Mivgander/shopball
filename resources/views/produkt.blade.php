@@ -7,6 +7,8 @@
     <title>{{$produkt->tytul}} - SHOPBALL</title>
 
     <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet">
+    @livewireStyles
+
     <style>
         header
         {
@@ -113,5 +115,6 @@
             window.location = '/koszyk/dodaj/' + btn.dataset.kategoria + '/' + btn.dataset.id;
         });
     </script>
+    @livewireScripts
 </body>
 </html>

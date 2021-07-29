@@ -27,7 +27,7 @@ class KategoriaController extends Controller
         /**
          * Zwraca tablicę obektów klasy FiltyDane przechowujących filtry dla aktualnej kategorii.
          * @param Request $request obiekt Request
-         * @param string $databaseName nazwa bazy danych, z której mają być brane dane
+         * @param string $databaseName nazwa tabeli, z której mają być brane dane
          *
          * @return array
          */

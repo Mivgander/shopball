@@ -14,9 +14,9 @@
         <h1 class="text-4xl font-bold uppercase text-blue-600 cursor-pointer pl-3"><a href="{{ url('/') }}">shopball</a></h1>
 
         <div class="w-2/5">
-            <form action="/search" method="get" class="flex">
-                <input required autocomplete="off" type="text" name="q" id="search-input" class="text-xl p-2">
-                <button type="submit" name="submit" class="bg-blue-600 hover:bg-blue-500 text-xl p-2">Szukaj</button>
+            <form action="/szukaj" method="get" class="flex">
+                @livewire('search-input')
+                <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-xl p-2">Szukaj</button>
             </form>
         </div>
 

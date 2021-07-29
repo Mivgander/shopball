@@ -9,10 +9,12 @@ Ogólne:
 
 - Obsługa kont
 - Obsługa koszyka
+- pasek wyszykiwań
 
 Strona główna:
 
 - całe menu działa odpowiednio
+- slider w menu głównym jest interaktywny
 - blok "polecane"
 - blok "produkt dnia"
 
@@ -27,8 +29,6 @@ Podstrona "produkt":
 
 
 ## Do zrobienia
-- slider w menu głównym ma być klikany z różnymi funkcjami
-- pasek wyszykiwań
 - możliwość dodawania produktów
 
  [ Demo ]: <http://shopball.epizy.com>

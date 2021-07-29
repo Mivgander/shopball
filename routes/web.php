@@ -7,6 +7,7 @@ use App\Http\Controllers\KoszykController;
 use App\Http\Controllers\ProduktController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SzukajController;
 use Illuminate\Http\RedirectResponse;
 
 /*
@@ -23,6 +24,16 @@ use Illuminate\Http\RedirectResponse;
 Route::get('/', [IndexController::class, 'show']);
 Route::get('kategoria/{nazwa}', [KategoriaController::class, 'show'])->name('kategorie');
 Route::get('produkt/{nazwa}/{id}', [ProduktController::class, 'show']);
+Route::get('szukaj', [SzukajController::class, 'main']);
+
+/* INFO */
+Route::get('o-nas', function(){
+    return view('o-nas');
+});
+Route::get('o-produktach', function(){
+    return view('o-produktach');
+});
+/* INFO */
 
 /* LOGOWANIE */
 Route::get('login', [LoginController::class, 'main'])->name('login');
