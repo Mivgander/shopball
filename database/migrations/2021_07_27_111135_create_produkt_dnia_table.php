@@ -20,6 +20,10 @@ class CreateProduktDniaTable extends Migration
                 $table->enum('tabela', ['pilka_nozna', 'pilka_reczna', 'siatkowka', 'koszykowka', 'tenis_ziemny', 'tenis_stolowy']);
                 $table->bigInteger('id_produktu');
                 $table->date('dzien');
+
+                $table->engine = "InnoDB";
+                $table->charset = "utf8mb4";
+                $table->collation = "utf8mb4_polish_ci";
             });
         }
     }

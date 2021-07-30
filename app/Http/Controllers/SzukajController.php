@@ -24,6 +24,7 @@ class SzukajController extends Controller
     function main(Request $request)
     {
         $produkty = [];
+        $produktyBezFiltrow = [];
         $parametry = [];
 
         function SzukajCreateParametry($kategoria, $przedmiot)
@@ -112,8 +113,8 @@ class SzukajController extends Controller
                     break;
             }
 
-            if($req->marki) $pytanie = $pytanie->where('marka', $req->marki);
-            if($req->kolory) $pytanie = $pytanie->where('kolor', $req->kolory);
+            if($req->marka) $pytanie = $pytanie->where('marka', $req->marka);
+            if($req->kolor) $pytanie = $pytanie->where('kolor', $req->kolor);
             if($req->od != '') $pytanie = $pytanie->where('cena', '>=', $req->od);
             if($req->do != '') $pytanie = $pytanie->where('cena', '<=', $req->do);
 
@@ -123,36 +124,42 @@ class SzukajController extends Controller
         switch($request->kategoria)
         {
             case 'wszedzie':
+                $produktyBezFiltrow[] = PilkaNozna::where('tytul', 'LIKE', '%'.$request->q.'%')->get();
                 foreach(SzukajCreateSelect('pilka-nozna', $request) as $row)
                 {
                     $produkty[] = new PolecaneDane('pilka-nozna', $row);
                     $parametry[] = SzukajCreateParametry('pilka-nozna', $row);
                 }
 
+                $produktyBezFiltrow[] = PilkaReczna::where('tytul', 'LIKE', '%'.$request->q.'%')->get();
                 foreach(SzukajCreateSelect('pilka-reczna', $request) as $row)
                 {
                     $produkty[] = new PolecaneDane('pilka-reczna', $row);
                     $parametry[] = SzukajCreateParametry('pilka-reczna', $row);
                 }
 
+                $produktyBezFiltrow[] = Siatkowka::where('tytul', 'LIKE', '%'.$request->q.'%')->get();
                 foreach(SzukajCreateSelect('siatkowka', $request) as $row)
                 {
                     $produkty[] = new PolecaneDane('siatkowka', $row);
                     $parametry[] = SzukajCreateParametry('siatkowka', $row);
                 }
 
+                $produktyBezFiltrow[] = Koszykowka::where('tytul', 'LIKE', '%'.$request->q.'%')->get();
                 foreach(SzukajCreateSelect('koszykowka', $request) as $row)
                 {
                     $produkty[] = new PolecaneDane('koszykowka', $row);
                     $parametry[] = SzukajCreateParametry('koszykowka', $row);
                 }
 
+                $produktyBezFiltrow[] = TenisZiemny::where('tytul', 'LIKE', '%'.$request->q.'%')->get();
                 foreach(SzukajCreateSelect('tenis-ziemny', $request) as $row)
                 {
                     $produkty[] = new PolecaneDane('tenis-ziemny', $row);
                     $parametry[] = SzukajCreateParametry('tenis-ziemny', $row);
                 }
 
+                $produktyBezFiltrow[] = TenisStolowy::where('tytul', 'LIKE', '%'.$request->q.'%')->get();
                 foreach(SzukajCreateSelect('tenis-stolowy', $request) as $row)
                 {
                     $produkty[] = new PolecaneDane('tenis-stolowy', $row);
@@ -160,6 +167,7 @@ class SzukajController extends Controller
                 }
                 break;
             case 'pilka_nozna':
+                $produktyBezFiltrow[] = PilkaNozna::where('tytul', 'LIKE', '%'.$request->q.'%')->get();
                 foreach(SzukajCreateSelect('pilka-nozna', $request) as $row)
                 {
                     $produkty[] = new PolecaneDane('pilka-nozna', $row);
@@ -167,6 +175,7 @@ class SzukajController extends Controller
                 }
                 break;
             case 'pilka_reczna':
+                $produktyBezFiltrow[] = PilkaReczna::where('tytul', 'LIKE', '%'.$request->q.'%')->get();
                 foreach(SzukajCreateSelect('pilka-reczna', $request) as $row)
                 {
                     $produkty[] = new PolecaneDane('pilka-reczna', $row);
@@ -174,6 +183,7 @@ class SzukajController extends Controller
                 }
                 break;
             case 'siatkowka':
+                $produktyBezFiltrow[] = Siatkowka::where('tytul', 'LIKE', '%'.$request->q.'%')->get();
                 foreach(SzukajCreateSelect('siatkowka', $request) as $row)
                 {
                     $produkty[] = new PolecaneDane('siatkowka', $row);
@@ -181,6 +191,7 @@ class SzukajController extends Controller
                 }
                 break;
             case 'koszykowka':
+                $produktyBezFiltrow[] = Koszykowka::where('tytul', 'LIKE', '%'.$request->q.'%')->get();
                 foreach(SzukajCreateSelect('koszykowka', $request) as $row)
                 {
                     $produkty[] = new PolecaneDane('koszykowka', $row);
@@ -188,6 +199,7 @@ class SzukajController extends Controller
                 }
                 break;
             case 'tenis_ziemny':
+                $produktyBezFiltrow[] = TenisZiemny::where('tytul', 'LIKE', '%'.$request->q.'%')->get();
                 foreach(SzukajCreateSelect('tenis-ziemny', $request) as $row)
                 {
                     $produkty[] = new PolecaneDane('tenis-ziemny', $row);
@@ -195,6 +207,7 @@ class SzukajController extends Controller
                 }
                 break;
             case 'tenis_stolowy':
+                $produktyBezFiltrow[] = TenisStolowy::where('tytul', 'LIKE', '%'.$request->q.'%')->get();
                 foreach(SzukajCreateSelect('tenis-stolowy', $request) as $row)
                 {
                     $produkty[] = new PolecaneDane('tenis-stolowy', $row);
@@ -203,83 +216,83 @@ class SzukajController extends Controller
                 break;
         }
 
-        function SzukajCreateFiltry($przedmioty)
+        function SzukajCreateFiltry($przedmioty, $przedmiotyBezFiltrow)
         {
-            $filtry = [];
-
-            $marki = [];
             $kolory = [];
+            $marki = [];
+            foreach($przedmiotyBezFiltrow as $tab)
+            {
+                if($tab == []) continue;
+                foreach($tab as $row)
+                {
+                    if(!in_array($row->kolor, $kolory))
+                    {
+                        $kolory[] = $row->kolor;
+                    }
+
+                    if(!in_array($row->marka, $marki))
+                    {
+                        $marki[] = $row->marka;
+                    }
+                }
+            }
+
+            $liczbaKolory = [];
+            $liczbaMarki = [];
+            for($i=0; $i<count($kolory); $i++)
+            {
+                $liczbaKolory[] = 0;
+            }
+            for($i=0; $i<count($marki); $i++)
+            {
+                $liczbaMarki[] = 0;
+            }
+
             foreach($przedmioty as $row)
             {
-                $marki[] = $row->query->marka;
-                $kolory[] = $row->query->kolor;
-            }
-
-            $elo = [];
-            foreach(array_unique($marki) as $marka)
-            {
-                $i = 0;
-                foreach($przedmioty as $row)
+                $key = array_search($row->query->kolor, $kolory);
+                if($key !== false)
                 {
-                    if($row->query->marka == $marka)
-                    {
-                        $i++;
-                    }
+                    $liczbaKolory[$key]++;
                 }
 
-                $elo[] = ['param' => $marka, 'ile' => $i];
-            }
-
-            $koniec = new FiltryDane('marki', $elo);
-            $filtry[] = $koniec;
-            $elo = [];
-
-            foreach(array_unique($kolory) as $kolor)
-            {
-                $i = 0;
-                foreach($przedmioty as $row)
+                $key = array_search($row->query->marka, $marki);
+                if($key !== false)
                 {
-                    if($row->query->kolor == $kolor)
-                    {
-                        $i++;
-                    }
+                    $liczbaMarki[$key]++;
                 }
-
-                $elo[] = ['param' => $kolor, 'ile' => $i];
             }
 
-            $koniec = new FiltryDane('kolory', $elo);
-            $filtry[] = $koniec;
+            $paramKolory = [];
+            $paramMarki = [];
+            for($i=0; $i<count($kolory); $i++)
+            {
+                $paramKolory[] = ['param' => $kolory[$i], 'ile' => $liczbaKolory[$i]];
+            }
+            for($i=0; $i<count($marki); $i++)
+            {
+                $paramMarki[] = ['param' => $marki[$i], 'ile' => $liczbaMarki[$i]];
+            }
+            $filtry = [new FiltryDane('marka', $paramMarki), new FiltryDane('kolor', $paramKolory)];
 
             return $filtry;
         }
 
         function SzukajSortujFiltry($filtry)
         {
-            $max = count($filtry[0]->query);
-            for($i=0; $i<$max; $i++)
+            foreach($filtry as $filtr)
             {
-                for($j=0; $j<$max; $j++)
+                $max = count($filtr->query);
+                for($i=0; $i<$max; $i++)
                 {
-                    if($filtry[0]->query[$i]['ile'] > $filtry[0]->query[$j]['ile'])
+                    for($j=0; $j<$max; $j++)
                     {
-                        $tmp = $filtry[0]->query[$i];
-                        $filtry[0]->query[$i] = $filtry[0]->query[$j];
-                        $filtry[0]->query[$j] = $tmp;
-                    }
-                }
-            }
-
-            $max = count($filtry[1]->query);
-            for($i=0; $i<$max; $i++)
-            {
-                for($j=0; $j<$max; $j++)
-                {
-                    if($filtry[1]->query[$i]['ile'] > $filtry[1]->query[$j]['ile'])
-                    {
-                        $tmp = $filtry[1]->query[$i];
-                        $filtry[1]->query[$i] = $filtry[1]->query[$j];
-                        $filtry[1]->query[$j] = $tmp;
+                        if($filtr->query[$i]['ile'] > $filtr->query[$j]['ile'])
+                        {
+                            $tmp = $filtr->query[$i];
+                            $filtr->query[$i] = $filtr->query[$j];
+                            $filtr->query[$j] = $tmp;
+                        }
                     }
                 }
             }
@@ -287,7 +300,7 @@ class SzukajController extends Controller
             return $filtry;
         }
 
-        $filtry = SzukajCreateFiltry($produkty);
+        $filtry = SzukajCreateFiltry($produkty, $produktyBezFiltrow);
         $filtry = SzukajSortujFiltry($filtry);
 
         return view('szukaj', [

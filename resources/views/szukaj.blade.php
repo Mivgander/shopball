@@ -105,6 +105,22 @@
             transform: rotate(45deg);
         }
 
+        .diasabled-box
+        {
+            cursor: default !important;
+        }
+
+        .disabled-text
+        {
+            color: #bbb !important;
+            text-decoration: none !important;
+        }
+
+        .disabled-checkmark
+        {
+            background-color: transparent !important;
+        }
+
         /* Checkbox */
 
 
@@ -145,12 +161,33 @@
                         <div class="mt-8">
                             <h2 class="text-2xl">{{mb_strtoupper(mb_substr($filtr->nazwa, 0, 1)) . mb_substr($filtr->nazwa, 1);}}</h2>
                             <div class="mt-4">
-                                @foreach($filtr->query as $query)
-                                <label class="filtr-box"><span class="filtr-nazwa text-xl">{{$query['param']}}</span> <span class="text-base">({{$query['ile']}})</span>
-                                    <input type="checkbox" name="{{$filtr->nazwa}}[]" value="{{$query['param']}}" <?php if(isset($_REQUEST[$filtr->nazwa]) && in_array($query['param'], $_REQUEST[$filtr->nazwa])) echo 'checked'; ?>>
-                                    <span class="checkmark"></span>
-                                </label>
-                                @endforeach
+                                @if(count($filtr->query) > 4)
+                                    <?php $x = 0; ?>
+                                    @foreach($filtr->query as $query)
+                                    @if($x == 4)
+                                        <span class="more-button cursor-pointer text-lg text-blue-600">Pokaż więcej</span>
+                                        <div style="display: none;" class="more-inputs">
+                                    @endif
+                                    <label class="filtr-box">
+                                        <input class="filtr-input" type="checkbox" name="{{$filtr->nazwa}}[]" value="{{$query['param']}}" @if($query['ile'] == 0) disabled @endif <?php if(isset($_REQUEST[$filtr->nazwa]) && in_array($query['param'], $_REQUEST[$filtr->nazwa])) echo 'checked'; ?>>
+                                        <span class="filtr-nazwa text-xl">{{$query['param']}}</span> <span class="filtr-numer text-base">({{$query['ile']}})</span>
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                    <?php $x++; ?>
+                                    @endforeach
+                                    </div>
+                                    <span style="display: none;" class="less-button cursor-pointer text-lg text-blue-600">Pokaż mniej</span>
+                                @else
+                                    @foreach($filtr->query as $query)
+                                    <label class="filtr-box">
+                                        <input class="filtr-input" type="checkbox" name="{{$filtr->nazwa}}[]" value="{{$query['param']}}" @if($query['ile'] == 0) disabled @endif <?php if(isset($_REQUEST[$filtr->nazwa]) && in_array($query['param'], $_REQUEST[$filtr->nazwa])) echo 'checked'; ?>>
+                                        <span class="filtr-nazwa text-xl">{{$query['param']}}</span> <span class="filtr-numer text-base">({{$query['ile']}})</span>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    @endforeach
+                                @endif
+
                             </div>
                         </div>
                         @endforeach
@@ -213,6 +250,43 @@
             btns[i].addEventListener('click', event => {
                 window.location = '/koszyk/dodaj/' + btns[i].dataset.kategoria + '/' + btns[i].dataset.id;
             });
+        }
+    </script>
+    <script>
+        var moreButton = document.getElementsByClassName('more-button');
+        var lessButton = document.getElementsByClassName('less-button');
+        var moreInputs = document.getElementsByClassName('more-inputs');
+
+        for(let i=0; i<moreButton.length; i++)
+        {
+            moreButton[i].addEventListener('click', function(){
+                moreInputs[i].style.display = "block";
+                lessButton[i].style.display = "initial";
+                moreButton[i].style.display = "none";
+            });
+
+            lessButton[i].addEventListener('click', function(){
+                moreInputs[i].style.display = "none";
+                lessButton[i].style.display = "none";
+                moreButton[i].style.display = "initial";
+            });
+        }
+
+        var filtrinput = document.getElementsByClassName('filtr-input');
+        var box = document.getElementsByClassName('filtr-box');
+        var nazwa = document.getElementsByClassName('filtr-nazwa');
+        var numer = document.getElementsByClassName('filtr-numer');
+        var checkmark = document.getElementsByClassName('checkmark');
+
+        for(let i=0; i<filtrinput.length; i++)
+        {
+            if(filtrinput[i].disabled == true)
+            {
+                box[i].classList.add('diasabled-box');
+                nazwa[i].classList.add('disabled-text');
+                numer[i].classList.add('disabled-text');
+                checkmark[i].classList.add('disabled-checkmark');
+            }
         }
     </script>
     @livewireScripts
