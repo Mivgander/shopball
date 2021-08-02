@@ -10,7 +10,7 @@
     }
 </style>
 
-<header class="w-full flex justify-between fixed z-10 bg-white" style="height: 70px">
+<header class="w-full flex justify-between fixed z-20 bg-white" style="height: 70px">
         <h1 class="text-4xl font-bold uppercase text-blue-600 cursor-pointer pl-3"><a href="{{ url('/') }}">shopball</a></h1>
 
         <div class="w-2/5">

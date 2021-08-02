@@ -14,14 +14,12 @@ use Livewire\Component;
 class SearchInput extends Component
 {
     public $search = '';
-
     public $select = 'wszedzie';
 
     public function render()
     {
         return view('livewire.search-input', [
-            'produkty' => $this->Search(),
-            'select' => $this->select
+            'produkty' => $this->Search()
         ]);
     }
 

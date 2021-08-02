@@ -1,5 +1,5 @@
 <div class="w-full flex relative">
-    <input required autocomplete="off" wire:model="search" type="text" placeholder="Szukaj..." name="q" id="search-input" class="text-xl p-2 w-full">
+    <input required autocomplete="off" wire:model.debounce.500ms="search" type="text" placeholder="Szukaj..." name="q" id="search-input" class="text-xl p-2 w-full">
     <div id="search-result">
         @if($produkty != [])
             <div class="absolute left-0 w-full bg-white flex flex-col" style="top: 46px; border: 1px solid gray; border-top: none;">
