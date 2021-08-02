@@ -30,5 +30,6 @@ Podstrona "produkt":
 
 ## Do zrobienia
 - możliwość dodawania produktów
+- responsywność (ale to na końcu)
 
  [ Demo ]: <http://shopball.epizy.com>
