@@ -1,7 +1,7 @@
 # Shopball
 ### [ Demo ]
 
-Jest to mój projekt fikcyjnego sklepu internetowego sprzedającego piłki. Całość jest zrobiona przy pomocy Laravela.
+Jest to mój projekt fikcyjnego sklepu internetowego sprzedającego piłki. Całość jest zrobiona przy pomocy Laravela oraz Laravel-Livewire.
 
 ## Co jest
 
