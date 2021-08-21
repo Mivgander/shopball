@@ -10,6 +10,7 @@ Ogólne:
 - Obsługa kont
 - Obsługa koszyka
 - pasek wyszykiwań
+- możliwość dodawania produktów: dodawać produkty można tylko z konta administratora. email: admin@admin.pl, hasło: adminadmin. Po zalogowaniu się w podmenu konta jest przycisk "dodaj". Jeśli poprawnie wypełniono formularz, produkt zostanie dodany.
 
 Strona główna:
 
@@ -29,7 +30,6 @@ Podstrona "produkt":
 
 
 ## Do zrobienia
-- możliwość dodawania produktów
 - responsywność (ale to na końcu)
 
  [ Demo ]: <http://shopball.epizy.com>
