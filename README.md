@@ -30,6 +30,6 @@ Podstrona "produkt":
 
 
 ## Do zrobienia
-- responsywność (ale to na końcu)
+- responsywność
 
  [ Demo ]: <http://shopball.epizy.com>
