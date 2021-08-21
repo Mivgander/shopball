@@ -11,6 +11,17 @@ class TenisZiemny extends Model
 
     protected $table = 'tenis_ziemny';
 
+    protected $fillable = [
+        'marka',
+        'typ',
+        'typ_nawierzchni',
+        'kolor',
+        'cena',
+        'tytul',
+        'opis',
+        'zdjecie'
+    ];
+
     static function Rekordy($req)
     {
         $data = TenisZiemny::where('id', '>=', '1');

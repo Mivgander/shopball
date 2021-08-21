@@ -5,7 +5,6 @@
 <script>
     function registerClose()
     {
-        console.log('howaj');
         document.getElementById('registerConfirm').style.display = "none";
     }
 </script>

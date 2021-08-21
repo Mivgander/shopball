@@ -11,6 +11,17 @@ class Koszykowka extends Model
 
     protected $table = 'koszykowka';
 
+    protected $fillable = [
+        'marka',
+        'rozmiar',
+        'przeznaczenie',
+        'kolor',
+        'cena',
+        'tytul',
+        'opis',
+        'zdjecie'
+    ];
+
     static function Rekordy($req)
     {
         $data = Koszykowka::where('id', '>=', '1');

@@ -10,15 +10,7 @@ use App\Models\TenisStolowy;
 use App\Models\TenisZiemny;
 use Livewire\Component;
 use Livewire\WithPagination;
-
-class FiltryDane
-{
-    function __construct($nazwa, $query)
-    {
-        $this->nazwa = $nazwa;
-        $this->query = $query;
-    }
-}
+use App\Http\Livewire\FiltryDane;
 
 class FiltrujProdukty extends Component
 {

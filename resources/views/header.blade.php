@@ -29,6 +29,9 @@
                 <a href="{{ url('/konto') }}" class="cursor-pointer hover:underline menu-a">Konto</a>
                 <section class="submenu hidden absolute right-2" style="top: 70px">
                     <ul class="flex flex-col">
+                        @if(Auth::user()->is_admin == true)
+                            <li class="submenu-element p-2" id="konto-btn"><a href="{{ url('dodaj') }}" class="menu-a">Dodaj</a></li>
+                        @endif
                         <li class="submenu-element p-2" id="konto-btn"><a href="{{ url('wyloguj') }}" class="menu-a">Wyloguj</a></li>
                     </ul>
                 </section>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="PL-pl">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -60,9 +60,9 @@
             </div>
         </div>
 
-        <div class="bg-white mx-auto p-6 pr-28 mt-5" style="max-width: 1300px">
+        <div class="bg-white mx-auto p-6 pr-28 mt-5 leading-snug" style="max-width: 1300px">
             <h1 class="text-2xl font-bold mb-5">Opis</h1>
-            <p class="text-xl">{{$produkt->opis}}</p>
+            <p class="text-xl"><?php echo $produkt->opis; ?></p>
         </div>
 
         <div class="bg-white mx-auto p-6 mt-5" style="max-width: 1300px">

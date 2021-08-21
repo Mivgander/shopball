@@ -27,7 +27,7 @@
         @endif
     </div>
 
-    <select wire:model="select" name="kategoria" class="outline-none">
+    <select wire:model="select" name="kategoria" class="outline-none bg-white">
         <option value="wszedzie">Wszędzie</option>
         <option value="pilka_nozna">Piłka nożna</option>
         <option value="pilka_reczna">Piłka ręczna</option>

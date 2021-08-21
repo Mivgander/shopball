@@ -18,7 +18,7 @@ class CreateSiatkowkaTable extends Migration
             Schema::create('siatkowka', function (Blueprint $table) {
                 $table->id();
                 $table->string("marka");
-                $table->enum("rozmiar", ['2', '4', '5']);
+                $table->enum("rozmiar", ['2', '4', '5', 'inny']);
                 $table->enum('łączenie', ['klejona', 'szyta maszynowo', 'szyta ręcznie', 'zgrzewana termicznie', 'brak informacji']);
                 $table->enum('przeznaczenie', ['na halę', 'na plażę', 'na basen', 'brak informacji']);
                 $table->string("kolor");

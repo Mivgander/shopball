@@ -11,6 +11,16 @@ class TenisStolowy extends Model
 
     protected $table = 'tenis_stolowy';
 
+    protected $fillable = [
+        'marka',
+        'typ',
+        'kolor',
+        'cena',
+        'tytul',
+        'opis',
+        'zdjecie'
+    ];
+
     static function Rekordy($req)
     {
         $data = TenisStolowy::where('id', '>=', '1');

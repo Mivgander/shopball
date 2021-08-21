@@ -40,40 +40,46 @@
 
     <main class=" w-full bg-gray-200 py-4">
         <div class="main-parent w-full mx-auto flex flex-col items-start">
-            <section class="bg-white w-full p-4 text-center">
-                <h1 class="text-3xl uppercase font-bold">Twój koszyk</h1>
-            </section>
-            <section class="bg-white w-full p-4">
-                @if($wiadomosc = Session::get('error'))
-                    <div class="bg-red-400 border-red-600 border-2 p-4">
-                        <p>{{$wiadomosc}}</p>
-                    </div>
-                @endif
-                <?php $suma = 0; ?>
-                @foreach($produkty as $produkt)
-                 <?php $suma += $produkt->query[0]->cena; ?>
-                    <div class="mx-3 p-3 bg-white flex flex-row flex-wrap border-b-2 border-gray-200">
-                        <a href="{{ asset('/produkt/'.$produkt->kategoriaURL.'/'.$produkt->query[0]->id) }}" class="mr-5 cursor-pointer" style="width: 150px; height: 150px;">
-                            <img src="{{ asset('images/'.$produkt->query[0]->zdjecie) }}" style="max-height: 150px; max-width: 150px" class="mx-auto">
-                        </a>
-                        <div style="width: calc(100% - 180px)">
-                            <a href="{{ asset('/produkt/'.$produkt->kategoriaURL.'/'.$produkt->query[0]->id) }}" class="hover:underline cursor-pointer">
-                                <h2 class="text-xl">{{$produkt->query[0]->tytul}}</h2>
+            @if(count($produkty) > 0)
+                <section class="bg-white w-full p-4 text-center">
+                    <h1 class="text-3xl uppercase font-bold">Twój koszyk</h1>
+                </section>
+                <section class="bg-white w-full p-4">
+                    @if($wiadomosc = Session::get('error'))
+                        <div class="bg-red-400 border-red-600 border-2 p-4">
+                            <p>{{$wiadomosc}}</p>
+                        </div>
+                    @endif
+                    <?php $suma = 0; ?>
+                    @foreach($produkty as $produkt)
+                    <?php $suma += $produkt->query[0]->cena; ?>
+                        <div class="mx-3 p-3 bg-white flex flex-row flex-wrap border-b-2 border-gray-200">
+                            <a href="{{ asset('/produkt/'.$produkt->kategoriaURL.'/'.$produkt->query[0]->id) }}" class="mr-5 cursor-pointer" style="width: 150px; height: 150px;">
+                                <img src="{{ asset('images/'.$produkt->query[0]->zdjecie) }}" style="max-height: 150px; max-width: 150px" class="mx-auto">
                             </a>
-                            <h1 class="text-3xl font-bold">{{number_format($produkt->query[0]->cena, 2, ',', ' ')}} zł</h1>
-                            <div>
-                                <button data-id="{{$produkt->query[0]->id}}" data-kategoria="{{$produkt->kategoriaURL}}" class="koszyk mt-5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-lg">Usuń z koszyka</button>
+                            <div style="width: calc(100% - 180px)">
+                                <a href="{{ asset('/produkt/'.$produkt->kategoriaURL.'/'.$produkt->query[0]->id) }}" class="hover:underline cursor-pointer">
+                                    <h2 class="text-xl">{{$produkt->query[0]->tytul}}</h2>
+                                </a>
+                                <h1 class="text-3xl font-bold">{{number_format($produkt->query[0]->cena, 2, ',', ' ')}} zł</h1>
+                                <div>
+                                    <button data-id="{{$produkt->query[0]->id}}" data-kategoria="{{$produkt->kategoriaURL}}" class="koszyk mt-5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-lg">Usuń z koszyka</button>
+                                </div>
                             </div>
                         </div>
+                    @endforeach
+                </section>
+                <section class="bg-white w-full p-4">
+                    <div class="mx-3 p-3 flex">
+                        <div class="mr-5" style="width: 150px; height: 70px;"></div>
+                        <p class="text-4xl">Suma: <span class="font-bold">{{number_format($suma, 2, ',', ' ')}} zł</span></p>
                     </div>
-                @endforeach
-            </section>
-            <section class="bg-white w-full p-4">
-                <div class="mx-3 p-3 flex">
-                    <div class="mr-5" style="width: 150px; height: 70px;"></div>
-                    <p class="text-4xl">Suma: <span class="font-bold">{{number_format($suma, 2, ',', ' ')}} zł</span></p>
-                </div>
-            </section>
+                </section>
+            @else
+            <section class="bg-white w-full p-4 text-center">
+                    <h1 class="text-3xl text-red-700 uppercase font-bold">Twój koszyk jest pusty</h1>
+                </section>
+            @endif
         </div>
     </main>
     <script>

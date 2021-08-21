@@ -11,6 +11,17 @@ class PilkaReczna extends Model
 
     protected $table = 'pilka_reczna';
 
+    protected $fillable = [
+        'marka',
+        'rozmiar',
+        'łączenie',
+        'kolor',
+        'cena',
+        'tytul',
+        'opis',
+        'zdjecie'
+    ];
+
     static function Rekordy($req)
     {
         $data = PilkaReczna::where('id', '>=', '1');

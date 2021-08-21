@@ -11,6 +11,18 @@ class PilkaNozna extends Model
 
     protected $table = 'pilka_nozna';
 
+    protected $fillable = [
+        'marka',
+        'rozmiar',
+        'łączenie',
+        'przeznaczenie',
+        'kolor',
+        'cena',
+        'tytul',
+        'opis',
+        'zdjecie'
+    ];
+
     static function Rekordy($req)
     {
         $data = PilkaNozna::where('id', '>=', '1');

@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\DodajController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\KategoriaController;
+use App\Http\Controllers\KontoController;
 use App\Http\Controllers\KoszykController;
 use App\Http\Controllers\ProduktController;
 use App\Http\Controllers\LoginController;
@@ -21,10 +23,17 @@ use Illuminate\Http\RedirectResponse;
 |
 */
 
-Route::get('/', [IndexController::class, 'show']);
+Route::get('/', [IndexController::class, 'show'])->name('index');
 Route::get('kategoria/{nazwa}', [KategoriaController::class, 'show'])->name('kategorie');
 Route::get('produkt/{nazwa}/{id}', [ProduktController::class, 'show']);
 Route::get('szukaj', [SzukajController::class, 'main']);
+
+/* KONTO */
+Route::get('konto', [KontoController::class, 'main'])->middleware('auth');
+Route::post('konto/zmien/nick', [KontoController::class, 'nick'])->middleware('auth');
+Route::post('konto/zmien/email', [KontoController::class, 'email'])->middleware('auth');
+Route::post('konto/zmien/haslo', [KontoController::class, 'haslo'])->middleware('auth');
+/* KONTO */
 
 /* INFO */
 Route::get('o-nas', function(){
@@ -34,6 +43,11 @@ Route::get('o-produktach', function(){
     return view('o-produktach');
 });
 /* INFO */
+
+/* DODAWANIE */
+Route::get('dodaj', [DodajController::class, 'main'])->middleware(['admin', 'auth']);
+Route::get('dodaj/pomyslnie', [DodajController::class, 'pomyslnie'])->middleware(['auth', 'admin']);
+/* DODAWANIE */
 
 /* LOGOWANIE */
 Route::get('login', [LoginController::class, 'main'])->name('login');
@@ -45,8 +59,8 @@ Route::get('wyloguj', [LoginController::class, 'wyloguj']);
 /* WYLOGOWYWANIE */
 
 /* REJESTRACJA */
-Route::get('register', [RegisterController::class, 'main'])->middleware('auth');
-Route::post('register', [RegisterController::class, 'register'])->middleware('auth');
+Route::get('register', [RegisterController::class, 'main']);
+Route::post('register', [RegisterController::class, 'register']);
 /* REJESTRACJA */
 
 /* KOSZYK */

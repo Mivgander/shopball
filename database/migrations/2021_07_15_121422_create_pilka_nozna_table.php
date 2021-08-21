@@ -18,7 +18,7 @@ class CreatePilkaNoznaTable extends Migration
             Schema::create('pilka_nozna', function (Blueprint $table) {
                 $table->id();
                 $table->string("marka");
-                $table->enum("rozmiar", ['1', '3', '4', '5']);
+                $table->enum("rozmiar", ['1', '3', '4', '5', 'inny']);
                 $table->enum('łączenie', ['klejona', 'szyta maszynowo', 'szyta ręcznie', 'zgrzewana termicznie', 'brak informacji']);
                 $table->enum('przeznaczenie', ['na asfalt, beton', 'na halę', 'na plażę', 'na orlik', 'na trawę', 'brak informacji']);
                 $table->string("kolor");

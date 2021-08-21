@@ -11,6 +11,18 @@ class Siatkowka extends Model
 
     protected $table = 'siatkowka';
 
+    protected $fillable = [
+        'marka',
+        'rozmiar',
+        'łączenie',
+        'przeznaczenie',
+        'kolor',
+        'cena',
+        'tytul',
+        'opis',
+        'zdjecie'
+    ];
+
     static function Rekordy($req)
     {
         $data = Siatkowka::where('id', '>=', '1');

@@ -18,7 +18,7 @@ class CreatePilkaRecznaTable extends Migration
             Schema::create('pilka_reczna', function (Blueprint $table) {
                 $table->id();
                 $table->string("marka");
-                $table->enum("rozmiar", ['0', '1', '2', '3']);
+                $table->enum("rozmiar", ['0', '1', '2', '3', 'inny']);
                 $table->enum('łączenie', ['klejona', 'szyta maszynowo', 'szyta ręcznie', 'zgrzewana termicznie', 'brak informacji']);
                 $table->string("kolor");
                 $table->float('cena', 6, 2);

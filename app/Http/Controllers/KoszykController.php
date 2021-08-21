@@ -38,7 +38,7 @@ class KoszykController extends Controller
                     case 'tenis_ziemny':
                         $tablica[] = new PolecaneDane('tenis-ziemny', TenisZiemny::where('id', $row->id_produktu)->get());
                         break;
-                    case 'pilka_stolowy':
+                    case 'tenis_stolowy':
                         $tablica[] = new PolecaneDane('tenis-stolowy', TenisStolowy::where('id', $row->id_produktu)->get());
                         break;
                 }

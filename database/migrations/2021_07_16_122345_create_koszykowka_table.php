@@ -18,7 +18,7 @@ class CreateKoszykowkaTable extends Migration
             Schema::create('koszykowka', function (Blueprint $table) {
                 $table->id();
                 $table->string("marka");
-                $table->enum("rozmiar", ['3', '5', '6', '7']);
+                $table->enum("rozmiar", ['3', '5', '6', '7', 'inny']);
                 $table->enum('przeznaczenie', ['na asfalt, beton', 'na halę', 'na orlik', 'brak informacji']);
                 $table->string("kolor");
                 $table->float('cena', 6, 2);
